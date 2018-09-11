@@ -50,17 +50,15 @@ public class Solution1 {
 
         Attribute<String> firstname = myCache.getSearchAttribute("firstname");
         Attribute<String> lastname = myCache.getSearchAttribute("lastname");
-        Attribute<List<String>> friend = myCache.getSearchAttribute("friends");
+        //Attribute<List<String>> friend = myCache.getSearchAttribute("friends");
+        MyAttribute<List<String>> friend = new MyAttribute<>(myCache.getSearchAttribute("friends"));
 
         Query query = myCache.createQuery();
         query.includeKeys();
         query.includeValues();
         query.addCriteria(firstname.ilike("adi*"));
         query.addCriteria(lastname.ilike("neh*"));
-        List<String> check = new ArrayList<>();
-        check.add("me");
-        check.add("me2");
-        query.addCriteria(friend.in(Collections.singleton(check)));
+        query.addCriteria(friend.Contains("me1"));
 
         Results results = query.execute();
         System.out.println("Results ");
